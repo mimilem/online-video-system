@@ -12,7 +12,6 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->uuid();
             $table->string('roomId')->unique();
             $table->string('roomName');
             $table->string('roomPin')->unique();
@@ -20,6 +19,7 @@ return new class extends Migration
             $table->dateTime('schedule');
             $table->string('duration');
             $table->string('participants');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
