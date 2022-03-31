@@ -10,7 +10,7 @@
 var localStream = null;
 var username = null;
 var room;
-const SUPPORT_URL = "https://developer.enablex.io";
+const SUPPORT_URL = "https://localhost:8000";
 // Player Options
 var options = {
     id: "vcx_1001",
@@ -27,11 +27,11 @@ var options = {
         media: "",
         loader: {
             show: false,
-            url: window.site_url + "/img/loader.gif",
+            url: window.site_url + "/assets/enableX/img/loader.gif",
             style: "default",
             class: ""
         },
-        backgroundImg: window.site_url + "/img/player-bg.gif"
+        backgroundImg: window.site_url + "/assets/enableX/img/player-bg.gif"
     },
     toolbar: {
         displayMode: "auto",
@@ -55,7 +55,7 @@ var options = {
             display: false,
             clickthru: "https://www.enablex.io",
             target: "new",
-            logo: window.site_url + "/img/enablex.png",
+            logo: window.site_url + "/assets/enableX/img/enablex.png",
             title: "EnableX",
             position: "right"
         }
@@ -133,9 +133,9 @@ window.onload = function () {
 
         // JOin Room
         localStream = EnxRtc.joinRoom(token, config, function (success, error) {
-            if (error && error != null) {
+            if (error) {
             }
-            if (success && success != null) {
+            if (success) {
                 room = success.room;
                 var ownId = success.publishId;
                 setLiveStream(localStream);
@@ -153,11 +153,9 @@ window.onload = function () {
                     ).childNodes;
                     if (
                         event.message &&
-                        event.message !== null &&
-                        event.message.activeList &&
-                        event.message.activeList !== null
+                        event.message.activeList
                     ) {
-                        if (ATList.length == video_player_len.length) {
+                        if (ATList.length === video_player_len.length) {
                             return;
                         } else {
                             document.querySelector(
@@ -166,7 +164,7 @@ window.onload = function () {
                             for (stream in room.remoteStreams.getAll()) {
                                 var st = room.remoteStreams.getAll()[stream];
                                 for (j = 0; j < ATList.length; j++) {
-                                    if (ATList[j].streamId == st.getID()) {
+                                    if (ATList[j].streamId === st.getID()) {
                                         setLiveStream(st, ATList[j].name);
                                     }
                                 }
@@ -187,7 +185,7 @@ window.onload = function () {
                             ? streamEvent.data.stream
                             : streamEvent.stream;
                     for (k = 0; k < ATList.length; k++) {
-                        if (ATList[k].streamId == stream.getID()) {
+                        if (ATList[k].streamId === stream.getID()) {
                             setLiveStream(stream, ATList[k].name);
                         }
                     }
@@ -255,9 +253,9 @@ $(document).on("click", "#all_user_radio", function (e) {
 
 function audioMute() {
     var elem = document.querySelector(".icon-confo-mute");
-    var onImgPath = window.site_url + "/img/mic.png",
+    var onImgPath = window.site_url + "/assets/enableX/img/mic.png",
         onImgName = "mic.png";
-    var offImgPath = window.site_url + "/img/mute-mic.png",
+    var offImgPath = window.site_url + "/assets/enableX/img/mute-mic.png",
         offImgName = "mute-mic.png";
     var currentImgPath = elem.src.split("/")[elem.src.split("/").length - 1];
     if (currentImgPath === offImgName) {
@@ -274,9 +272,9 @@ function audioMute() {
 }
 function videoMute() {
     var elem = document.querySelector(".icon-confo-video-mute");
-    var onImgPath = window.site_url + "/img/video.png",
+    var onImgPath = window.site_url + "/assets/enableX/img/video.png",
         onImgName = "video.png";
-    var offImgPath = window.site_url + "/img/mute-video.png",
+    var offImgPath = window.site_url + "/assets/enableX/img/mute-video.png",
         offImgName = "mute-video.png";
     var currentImgPath = elem.src.split("/")[elem.src.split("/").length - 1];
     if (currentImgPath === offImgName) {
@@ -298,7 +296,7 @@ function videoMute() {
 
 function endCall() {
     var r = confirm("You want to quit?");
-    if (r == true) {
+    if (r === true) {
         window.location.href = SUPPORT_URL;
     }
 }
