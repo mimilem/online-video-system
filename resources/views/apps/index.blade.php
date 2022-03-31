@@ -19,6 +19,7 @@
                                 <h4 class="nk-block-title text-center">Join Room</h4>
                             </div>
                         </div>
+
                         <span id="message" class="text-danger small"></span>
                         <form action="" id="login_form">
                             <div class="form-group">

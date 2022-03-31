@@ -3,36 +3,46 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Mail\RoomNotificationMail;
+use App\Models\Room;
 use App\Repositories\Contracts\CreateRoomRepositoryInterface;
 use App\Services\EnableX;
+use App\Traits\CalculationEvent;
 use App\Traits\RandomValue;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
+use JetBrains\PhpStorm\ArrayShape;
 
 final class CreateRoomRepository implements CreateRoomRepositoryInterface
 {
-    use RandomValue;
+    use RandomValue, CalculationEvent;
 
-    public function createRoom($attributes)
+    public function createRoom($attributes): Model|Builder
     {
-        $random_name = rand(100000, 999999);
-        $dateOld = $attributes->input('date');
-        $time = $attributes->input('startTime');
-        $currentTime = strtotime("".$dateOld." ".$time."");
-        $hoursToAdd = -2;
-        $secondsToAdd = $hoursToAdd * (60 * 60);
-        $newTime = $currentTime + $secondsToAdd;
-        $date =  date("Y-m-d H:i:s", $newTime);
-        $time1 = $attributes->input('startTime');
-        $time2 = $attributes->input('endTime');
-        $array1 = explode(':', $time1);
-        $array2 = explode(':', $time2);
-        $minutes1 = ($array1[0] * 60.0 + $array1[1]);
-        $minutes2 = ($array2[0] * 60.0 + $array2[1]);
-        $diff = $minutes2 - $minutes1;
-        $room = $this->renderMetadataForRoom(
-            attributes: $attributes,
-            random_name: $random_name,
-            diff: $diff
-        );
+        $rooms = $this->CreateOnlineRoom(attributes: $attributes);
+        $currentTime = strtotime("".$attributes->date." ".$attributes->startTime."");
+        $date =  date("Y-m-d H:i:s", $currentTime);
+        $pinCode = rand(100000, 999999);
+
+        Mail::to($attributes->input('email'))->send(new RoomNotificationMail($pinCode, $rooms));
+
+        return Room::query()
+            ->create([
+                'roomId' => $rooms['room']['room_id'],
+                'roomName' => $rooms['room']['name'],
+                'roomPin' => $pinCode,
+                'reference' => $rooms['room']['owner_ref'],
+                'schedule' => $date,
+                'duration' => $rooms['room']['settings']['duration'],
+                'participants' => $rooms['room']['settings']['participants']
+            ]);
+    }
+
+    private function CreateOnlineRoom($attributes)
+    {
+        list($date, $difference) = $this->calculationDateOfEvent(attributes: $attributes);
+        $room = $this->renderMetadataForRoom(date: $date, difference: $difference, attributes: $attributes);
 
         $response = new EnableX;
         return $response->createConnexion()
@@ -40,29 +50,30 @@ final class CreateRoomRepository implements CreateRoomRepositoryInterface
             ->json();
     }
 
-    private function renderMetadataForRoom($attributes, $random_name, $diff): array
+    #[ArrayShape(["name" => "string", "owner_ref" => "string", "settings" => "array", "sip" => "false[]"])]
+    private function renderMetadataForRoom($date, $difference , $attributes): array
     {
         return [
-            "name" => "",
-            "owner_ref" => $this->generateNumericValues(100000, 999999),
-            "settings" => [
-                "description" => "",
-                "quality" => "SD",
-                "mode" => "group",
-                "participants" => "",
-                "duration" => "" ,
-                "scheduled" => false,
-                "scheduled_time" => "",
-                "auto_recording" => false,
-                "active_talker" => true,
-                "wait_moderator" => false,
-                "adhoc" => false,
-                "canvas" => true
+            "name"			        => "Sample Room: ". $this->generateRandomTransaction(8),
+            "owner_ref"		        => $this->generateRandomTransaction(8),
+            "settings"		        => [
+                "description"	    => "",
+                "quality"		    => "SD",
+                "mode"			    => "group",
+                "participants"	    => $attributes->participants,
+                "duration"		    => $difference,
+                "scheduled"         => false,
+                "moderators"        => "2",
+                "scheduled_time"    => "".$date,
+                "auto_recording"    => false,
+                "active_talker"	    => true,
+                "wait_moderator"    => false,
+                "adhoc"			    => false,
+                "canvas"		    => true
             ],
-            "sip" => [
-                "enabled" => false
+            "sip"		        => [
+                "enabled"		=> false
             ]
         ];
     }
-
 }
