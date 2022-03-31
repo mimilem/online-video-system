@@ -17,7 +17,7 @@ class Errors
         1003 => ["result" => "1003", "error" => "Mailing Error"],
         1004 => ["result" => "1004", "error" => "Data Error"],
         5001 => ["result" => "5001", "error" => "Invalid HTTP Request"],
-        5001 => ["result" => "5002", "error" => "System Settings/DB Setup Issues"],
+        5002 => ["result" => "5002", "error" => "System Settings/DB Setup Issues"],
 
     ];
 

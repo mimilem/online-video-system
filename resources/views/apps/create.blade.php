@@ -13,12 +13,12 @@
                                 <h4 class="nk-block-title text-center">Create your Room</h4>
                             </div>
                         </div>
-                        <form action="" method="post">
+                        <form action="{{ route('room.store') }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <input
                                     type="date"
-                                    class="form-control"
+                                    class="form-control @error @enderror"
                                     id="date"
                                     name="date"
                                     placeholder="Add event date">
@@ -66,7 +66,7 @@
                             </div>
                         </form>
                         <div class="form-note-s2 text-center pt-4"> New on our platform?
-                            <a href="{{ route('register') }}">Create room</a>
+                            <a href="{{ route('rooms.join') }}">Create room</a>
                         </div>
                     </div>
                 </div>
@@ -91,13 +91,13 @@
                                         <ul class="language-list">
                                             <li>
                                                 <a href="#" class="language-item">
-                                                    <img src="./images/flags/english.png" alt="" class="language-flag">
+                                                    <img src="" alt="" class="language-flag">
                                                     <span class="language-name">English</span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#" class="language-item">
-                                                    <img src="./images/flags/french.png" alt="" class="language-flag">
+                                                    <img src="" alt="" class="language-flag">
                                                     <span class="language-name">Français</span>
                                                 </a>
                                             </li>

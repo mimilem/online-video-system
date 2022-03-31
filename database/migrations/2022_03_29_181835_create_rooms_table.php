@@ -13,19 +13,13 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->foreignIdFor(User::class)
-                ->constrained()
-                ->cascadeOnDelete();
             $table->string('roomId')->unique();
             $table->string('roomName');
+            $table->string('roomPin')->unique();
             $table->string('reference');
-            $table->string('moderators');
             $table->dateTime('schedule');
             $table->string('duration');
             $table->string('participants');
-            $table->string('mode', 64);
-            $table->string('participantsID');
-            $table->string('moderatorID');
             $table->timestamps();
         });
     }

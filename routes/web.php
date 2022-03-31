@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Apps\RoomsAppController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', [RoomController::class, 'joinRoom'])->name('rooms.join');
+Route::get('/create-rooms', [RoomController::class, 'createRoom'])->name('room.create');
+Route::post('/create-rooms', [RoomController::class, 'storeRoom'])->name('room.store');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/client/rooms/{room}/{type}/{ref}',  [RoomsAppController::class, 'index']);
+

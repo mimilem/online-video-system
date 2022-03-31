@@ -13,13 +13,14 @@
                     </a>
                 </div>
                 <div class="card">
-                    <div class="card-inner card-inner-lg">
+                    <div class="card-inner card-inner-lg" >
                         <div class="nk-block-head">
                             <div class="nk-block-head-content">
                                 <h4 class="nk-block-title text-center">Join Room</h4>
                             </div>
                         </div>
-                        <form action="">
+                        <span id="message" class="text-danger small"></span>
+                        <form action="" id="login_form">
                             <div class="form-group">
                                 <input
                                     type="text"
@@ -37,21 +38,19 @@
                                     placeholder="Add your room id">
                             </div>
                             <div class="form-group">
-                                <div class="form-control-wrap">
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="secretKey"
-                                        name="secretKey"
-                                        placeholder="Enter your Pin">
-                                </div>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="roomPins"
+                                    name="roomPins"
+                                    placeholder="Enter your Pin">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary btn-block">Sign in</button>
+                                <button class="btn btn-outline-primary btn-block"  id="joinRoom">Sign in</button>
                             </div>
                         </form>
                         <div class="form-note-s2 text-center pt-4"> New on our platform?
-                            <a href="{{ route('register') }}">Create room</a>
+                            <a href="{{ route('room.create') }}">Create room</a>
                         </div>
                     </div>
                 </div>
@@ -76,13 +75,13 @@
                                         <ul class="language-list">
                                             <li>
                                                 <a href="#" class="language-item">
-                                                    <img src="./images/flags/english.png" alt="" class="language-flag">
+                                                    <img src="#" alt="" class="language-flag">
                                                     <span class="language-name">English</span>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#" class="language-item">
-                                                    <img src="./images/flags/french.png" alt="" class="language-flag">
+                                                    <img src="#" alt="" class="language-flag">
                                                     <span class="language-name">Français</span>
                                                 </a>
                                             </li>
@@ -100,4 +99,78 @@
                 </div>
             </div>
         </div>
+    </div>
+@endsection
+
+
+@section('scripts')
+    <script defer>
+        $(document).ready(function () {
+            $('#login_form').on('submit', (e) => {
+                e.preventDefault();
+                let data = {
+                    username: $('#username').val(),
+                    meetingId: $('#meetingId').val(),
+                    roomPins: $('#roomPins').val(),
+                }
+
+                let errors = [];
+
+                if (data.username.trim() === '') {
+                    errors.push('Enter your name.');
+                }
+                if (data.meetingId.trim() === '') {
+                    errors.push('Enter your Room Id.')
+                }
+
+                if (data.roomPins.trim() === '') {
+                    errors.push('Enter your Room Id.')
+                }
+
+                if (errors.length > 0) {
+                    let mapreduce = errors.map(function (item) {
+                        return item + "</br>";
+                    });
+                    let allErrors = mapreduce.join('').toString();
+
+                    toastr.clear();
+                    NioApp.Toast(`${allErrors}`, 'error', {
+                        position: 'top-center'
+                    });
+
+                    return false;
+                }
+
+                joinRoom(data, function (data) {
+                    console.log('data:' , data)
+                    if (!jQuery.isEmptyObject(data)) {
+                        const user_ref = username.value;
+                        window.location.href = `/client/rooms/${data.room_id}/${data.type}/${user_ref}`;
+                    } else {
+                        alert('No room found');
+                    }
+                });
+            })
+
+            function joinRoom(attributes, callback){
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        const response = JSON.parse(this.responseText);
+                        if (response.error) {
+                            toastr.clear();
+                            NioApp.Toast(`${response.error}`, 'error', {
+                                position: 'top-center'
+                            });
+                        } else {
+                            callback(response.room);
+                        }
+                    }
+                };
+                xhttp.open("POST", "/api/create-token/", true);
+                xhttp.setRequestHeader('Content-Type', 'application/json');
+                xhttp.send(JSON.stringify(attributes));
+            }
+        });
+    </script>
 @endsection
