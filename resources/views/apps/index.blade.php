@@ -21,29 +21,33 @@
                         </div>
 
                         <span id="message" class="text-danger small"></span>
-                        <form action="" id="login_form">
+                        <form action="{{ route('room.token') }}" method="POST">
+                            @csrf
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('username') error @enderror"
                                     id="username"
                                     name="username"
+                                    value="{{ old('username') }}"
                                     placeholder="Add your username">
                             </div>
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('meetingId') error @enderror"
                                     id="meetingId"
                                     name="meetingId"
+                                    value="{{ old('meetingId') }}"
                                     placeholder="Add your room id">
                             </div>
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('roomPins') error @enderror"
                                     id="roomPins"
                                     name="roomPins"
+                                    value="{{ old('roomPins') }}"
                                     placeholder="Enter your Pin">
                             </div>
                             <div class="form-group">
@@ -101,77 +105,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-
-@section('scripts')
-    <script defer>
-        $(document).ready(function () {
-            $('#login_form').on('submit', (e) => {
-                e.preventDefault();
-                let data = {
-                    username: $('#username').val(),
-                    meetingId: $('#meetingId').val(),
-                    roomPins: $('#roomPins').val(),
-                }
-
-                let errors = [];
-
-                if (data.username.trim() === '') {
-                    errors.push('Enter your name.');
-                }
-                if (data.meetingId.trim() === '') {
-                    errors.push('Enter your Room Id.')
-                }
-
-                if (data.roomPins.trim() === '') {
-                    errors.push('Enter your Room Id.')
-                }
-
-                if (errors.length > 0) {
-                    let mapreduce = errors.map(function (item) {
-                        return item + "</br>";
-                    });
-                    let allErrors = mapreduce.join('').toString();
-
-                    toastr.clear();
-                    NioApp.Toast(`${allErrors}`, 'error', {
-                        position: 'top-center'
-                    });
-
-                    return false;
-                }
-
-                joinRoom(data, function (data) {
-                    console.log('data:' , data)
-                    if (!jQuery.isEmptyObject(data)) {
-                        const user_ref = username.value;
-                        window.location.href = `/client/rooms/${data.room_id}/${data.type}/${user_ref}`;
-                    } else {
-                        alert('No room found');
-                    }
-                });
-            })
-
-            function joinRoom(attributes, callback){
-                const xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState === 4 && this.status === 200) {
-                        const response = JSON.parse(this.responseText);
-                        if (response.error) {
-                            toastr.clear();
-                            NioApp.Toast(`${response.error}`, 'error', {
-                                position: 'top-center'
-                            });
-                        } else {
-                            callback(response.room);
-                        }
-                    }
-                };
-                xhttp.open("POST", "/api/create-token/", true);
-                xhttp.setRequestHeader('Content-Type', 'application/json');
-                xhttp.send(JSON.stringify(attributes));
-            }
-        });
-    </script>
 @endsection

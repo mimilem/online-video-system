@@ -78,7 +78,6 @@ window.onload = function () {
 
     var countStream = 0;
     var username;
-    var localStreamId = null;
     var setLiveStream = function (stream, userName) {
         // Listening to Text Data
         stream.addEventListener("stream-data", function (e) {

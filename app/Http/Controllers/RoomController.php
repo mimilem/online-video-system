@@ -24,7 +24,7 @@ class RoomController extends Controller
 
     public function storeRoom(CreateRoomRequest $attributes): RedirectResponse
     {
-        $room = $this->repository->createRoom(attributes: $attributes);
+        $this->repository->createRoom(attributes: $attributes);
         return redirect()->route('rooms.join')->with('success', "Une mail a ete envoyer a votre address avec les informations necessaire pour rejoindre le room chat");
     }
 }

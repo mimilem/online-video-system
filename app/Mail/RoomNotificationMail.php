@@ -12,7 +12,7 @@ class RoomNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public $pinCode, public $rooms){}
+    public function __construct(public $pinCode, public $rooms, public $participant){}
 
     public function build()
     {
@@ -20,7 +20,8 @@ class RoomNotificationMail extends Mailable
             ->subject("Virtual meeting Created")
             ->view('mails.index', [
                 'pinsCode' => $this->pinCode,
-                'rooms' => $this->rooms
+                'rooms' => $this->rooms,
+                'participant' => $this->participant
             ]);
     }
 }

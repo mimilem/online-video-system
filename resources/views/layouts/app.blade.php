@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="{{ asset('assets/enableX/css/confo.css') }}">
     <script>
         window.site_url = '{{ url("/") }}';
-        var urlData = {
-            user_ref: '{{ $user_ref}}',
-            usertype: '{{ $usertype}}',
-            roomId: '{{ $roomId}}'
+        let urlData = {
+            user_ref: '{{ $user_ref }}',
+            usertype: '{{ $types }}',
+            roomId: '{{ $roomId }}'
         }
     </script>
+
 </head>
 <body>
     @yield('content')

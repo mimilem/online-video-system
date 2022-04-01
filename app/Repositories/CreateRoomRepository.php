@@ -24,8 +24,9 @@ final class CreateRoomRepository implements CreateRoomRepositoryInterface
         $currentTime = strtotime("".$attributes->date." ".$attributes->startTime."");
         $date =  date("Y-m-d H:i:s", $currentTime);
         $pinCode = rand(100000, 999999);
+        $participant = $this->generateRandomTransaction(6);
 
-        Mail::to($attributes->input('email'))->send(new RoomNotificationMail($pinCode, $rooms));
+        Mail::to($attributes->input('email'))->send(new RoomNotificationMail($pinCode, $rooms, $participant));
 
         return Room::query()
             ->create([
@@ -35,7 +36,8 @@ final class CreateRoomRepository implements CreateRoomRepositoryInterface
                 'reference' => $rooms['room']['owner_ref'],
                 'schedule' => $date,
                 'duration' => $rooms['room']['settings']['duration'],
-                'participants' => $rooms['room']['settings']['participants']
+                'participants' => $rooms['room']['settings']['participants'],
+                'participantPin' => $participant
             ]);
     }
 

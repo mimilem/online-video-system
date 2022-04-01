@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateTokenRequest extends FormRequest
 {
@@ -16,7 +17,7 @@ class CreateTokenRequest extends FormRequest
     {
         return [
             'username' => ['required', 'string'],
-            'meetingId' => ['required', 'string'],
+            'meetingId' => ['required', 'string', Rule::exists('rooms', 'roomId')],
             'roomPins' => ['required', 'string']
         ];
     }

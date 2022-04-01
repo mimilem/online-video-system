@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('schedule');
             $table->string('duration');
             $table->string('participants');
+            $table->string('participantPin');
             $table->boolean('status')->default(false);
             $table->timestamps();
         });
