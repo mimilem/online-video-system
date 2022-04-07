@@ -6,6 +6,12 @@
     <div class="nk-wrap nk-wrap-nosidebar">
         <div class="nk-content">
             <div class="nk-block nk-block-middle nk-auth-body wide-xs">
+                <div class="brand-logo pb-4 text-center">
+                    <a href="{{ route('room.create') }}" class="logo-link">
+                        <img class="logo-light logo-img logo-img-lg" src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}" srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo">
+                        <img class="logo-dark logo-img logo-img-lg" src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}" srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo-dark">
+                    </a>
+                </div>
                 <div class="card">
                     <div class="card-inner card-inner-lg">
                         <div class="nk-block-head">
@@ -19,7 +25,6 @@
                                 <input
                                     type="date"
                                     class="form-control @error('date') error @enderror"
-                                    id="date"
                                     name="date"
                                     value="{{ old('date') }}"
                                     placeholder="Add event date">
@@ -28,7 +33,6 @@
                                 <input
                                     type="time"
                                     class="form-control @error('startTime') error @enderror"
-                                    id="startTime"
                                     name="startTime"
                                     value="{{ old('startTime') }}"
                                     placeholder="Add your start time">
@@ -38,7 +42,6 @@
                                     <input
                                         type="time"
                                         class="form-control @error('endTime') error @enderror"
-                                        id="endTime"
                                         name="endTime"
                                         value="{{ old('endTime') }}"
                                         placeholder="Add your end time">
@@ -49,7 +52,6 @@
                                     <input
                                         type="email"
                                         class="form-control @error('email') error @enderror"
-                                        id="email"
                                         name="email"
                                         value="{{ old('email') }}"
                                         placeholder="Add your email address">
@@ -60,7 +62,6 @@
                                     <input
                                         type="text"
                                         class="form-control @error('participants') error @enderror"
-                                        id="participants"
                                         name="participants"
                                         value="{{ old('participants') }}"
                                         placeholder="Number of participants">
@@ -89,27 +90,6 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Help</a>
-                                </li>
-                                <li class="nav-item dropup">
-                                    <a class="dropdown-toggle dropdown-indicator has-indicator nav-link" data-toggle="dropdown" data-offset="0,10">
-                                        <span>English</span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                        <ul class="language-list">
-                                            <li>
-                                                <a href="#" class="language-item">
-                                                    <img src="" alt="" class="language-flag">
-                                                    <span class="language-name">English</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="language-item">
-                                                    <img src="" alt="" class="language-flag">
-                                                    <span class="language-name">Français</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
                                 </li>
                             </ul>
                         </div>

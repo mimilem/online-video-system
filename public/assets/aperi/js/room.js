@@ -1,17 +1,18 @@
-var getRoom = function(roomId,callback){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+const getRoom = function (roomId, callback) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
             callback(this.responseText);
         }
     };
-    xhttp.open("GET", "/getRoom/"+roomId, false);
+    xhttp.open("GET", "/getRoom/" + roomId, false);
     xhttp.send();
 };
-var createRoom = function(details,callback){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+
+const createRoom = function (details, callback) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
             callback(this.responseText);
         }
     };

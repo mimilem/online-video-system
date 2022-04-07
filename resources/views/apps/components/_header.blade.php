@@ -1,9 +1,9 @@
 <div class="site-header">
     <nav class="navbar navbar-dark">
         <div class="navbar-left" style="background-color:rgba(13,71,161,0.5);">
-            <a class="navbar-brand" href="{{ asset('assets/admins/images/logo3.png') }}" target="_blank">
+            <a class="navbar-brand" href="{{ asset('assets/aperi/Aperi Logo/SVG/Aperi.svg') }}" target="_blank">
                 <div class="logo">
-                    <img src="{{ asset('assets/admins/images/icon.png') }}" style="margin-top: -2rem; height: 8rem; margin-left: -2rem;" alt="">
+                    <img src="{{ asset('assets/aperi/Aperi Logo/SVG/Aperi.svg') }}" style="margin-top: -2rem; height: 8rem; margin-left: -2rem;" alt="">
                 </div>
             </a>
             <div class="toggle-button dark sidebar-toggle-first float-xs-left hidden-md-up">
@@ -30,18 +30,21 @@
                     <label><i class="far fa-clock"></i></label>
                     <label id="duration-label" style="font-weight: bold;color:white;" >00:00:00</label>
                 </li>
-                <li class="nav-item dropdown" >
-                    <span class="vcx_bar" id="exit_meeting" title="Sign Out" onclick="hangUp()" style="color:white;" >
-                        <i class="fa fa-power-off mr-0-5"></i>
-                        Sign Out
-                    </span>
-                </li>
-                <li class="nav-item dropdown" >
-                    <span style="color:white;" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-power-off mr-0-5"></i>
-                        End Meeeting
-                    </span>
-                </li>
+                @if($role == 'participant')
+                    <li class="nav-item dropdown" >
+                        <span class="vcx_bar" id="exit_meeting" title="Sign Out" onclick="hangUp()" style="color:white;" >
+                            <i class="fa fa-power-off mr-0-5"></i>
+                            Sign Out
+                        </span>
+                    </li>
+                @else
+                    <li class="nav-item dropdown" >
+                        <span style="color:white;" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fa fa-power-off mr-0-5"></i>
+                            End Meeeting
+                        </span>
+                    </li>
+                @endif
             </ul>
             <ul class="nav navbar-nav">
                 <li class="nav-item hidden-sm-down">

@@ -1,6 +1,3 @@
-
-
-
 (function($) {
     var positionElement = function positionElement(elem, x, y, width, height, animate) {
         var targetPosition = {

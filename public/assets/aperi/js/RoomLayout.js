@@ -1,28 +1,5 @@
-var attendanceApp = angular.module("userJoinListApp",[]);
-attendanceApp.controller("userJoinListController",function($scope) {
-    $scope.updateAttendanceLayout = function(data){
-        $scope.attendanceTemplate = {url: template};
-        $scope.attendee = data.user_list;
-        $scope.isModerator = data.is_mod;
-    }
-    $scope.class='fa-sort-alpha-down'
-    $scope.reverse = true;
-    $scope.orderByMe = function(x) {
-        if ($scope.class === "fa-sort-alpha-down")
-            $scope.class = "fa-sort-alpha-up";
-        else
-            $scope.class = "fa-sort-alpha-down";
-        $scope.reverse = !$scope.reverse ;
-    }
-    $scope.hide  = true;
-    $scope.show = function(x) {
-        $scope.hide = !$scope.hide ;
-    }
-    $scope.updateAttendanceLayout([]);
-});
-
-
-var template  = "<div class=\"rh-search-sort\">\n" +
+const attendanceApp = angular.module("userJoinListApp", []);
+const template  = "<div class=\"rh-search-sort\">\n" +
     "    <div class=\"pcr__search\" >\n" +
     "        <input type=\"search\" ng-model=\"q\" id=\"\" class=\"pcr__searchfield\" placeholder=\"Search\">\n" +
     "    </div>\n" +
@@ -63,3 +40,24 @@ var template  = "<div class=\"rh-search-sort\">\n" +
     "        <div class=\"no-particpants\">No participants to show.</div>\n" +
     "    </div>\n" +
     "</div>\n";
+attendanceApp.controller("userJoinListController",function($scope) {
+    $scope.updateAttendanceLayout = function(data){
+        $scope.attendanceTemplate = {url: template};
+        $scope.attendee = data.user_list;
+        $scope.isModerator = data.is_mod;
+    }
+    $scope.class='fa-sort-alpha-down'
+    $scope.reverse = true;
+    $scope.orderByMe = function(x) {
+        if ($scope.class === "fa-sort-alpha-down")
+            $scope.class = "fa-sort-alpha-up";
+        else
+            $scope.class = "fa-sort-alpha-down";
+        $scope.reverse = !$scope.reverse ;
+    }
+    $scope.hide  = true;
+    $scope.show = function(x) {
+        $scope.hide = !$scope.hide ;
+    }
+    $scope.updateAttendanceLayout([]);
+});

@@ -2,15 +2,12 @@ $('.icheck').iCheck({
     checkboxClass: 'icheckbox_minimal',
     radioClass: 'iradio_minimal',
 });
-var joinButton = document.querySelector('#joinRoom');
+const joinButton = document.querySelector('#joinRoom');
 
-// $('.icheck').on('ifToggled', function (event) {
-//     document.querySelector('#agree_terms').checked ? joinButton.removeAttribute('disabled') : joinButton.setAttribute('disabled', 'disabled')
-// });
-var joinRoom = function (details, callback) {
-    var xhttp = new XMLHttpRequest();
+const joinRoom = function (details, callback) {
+    const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             callback(this.responseText);
         }
     };
@@ -24,30 +21,30 @@ document.getElementById("joinRoom").addEventListener('click', function (event) {
 
 
 function enterRoom(){
-    var key = window.location.href.split("/")[window.location.href.split("/").length - 1];
-    var name = document.getElementById("userName").value.trim();
+    const key = window.location.href.split("/")[window.location.href.split("/").length - 1];
+    const name = document.getElementById("userName").value.trim();
     localStorage.setItem("mic", $("#mic option:selected")[0].id);
     localStorage.setItem("cam", $("#cam option:selected")[0].id);
     if(name === ""){
         toastr.error("Name should not be empty","",{ positionClass : "toast-top-center"});
         return false;
     }
-    var mute = '';
+    let mute = '';
 
     if (document.querySelector('#mute').checked) {
         mute = 'audio';
     }
     localStorage.setItem("userName", name);
-    var obj = {
+    const obj = {
         "key": key,
         "name": name
     };
     startWaitLoader();
     joinRoom(obj, function (response) {
-        var res = JSON.parse(response);
+        const res = JSON.parse(response);
         if (res) {
             if (res.result === 0) {
-                var dec = window.atob(res.token);
+                const dec = window.atob(res.token);
                 console.log(JSON.parse(dec).roomMeta.settings.quality);
                 localStorage.setItem("quality", JSON.parse(dec).roomMeta.settings.quality);
                 localStorage.setItem('token', res.token);
@@ -84,16 +81,16 @@ window.onload = function () {
     EnxRtc.getDevices(function (arg) {
         if(arg.result === 0)
         {
-            var camLst = arg.devices.cam;
-            var micLst = arg.devices.mic;
+            const camLst = arg.devices.cam;
+            const micLst = arg.devices.mic;
             listOutMic(micLst);
             listOutCam(camLst);
             listOutVideoLayers();
             localStorage.setItem("mic", $(document).find('#mic').find('option:eq(0)').attr('id'));
             localStorage.setItem("cam", $(document).find('#cam').find('option:eq(0)').attr('id'));
             localStorage.setItem("video-layers", $(document).find('#video-layers').find('option:eq(0)').attr('id'));
-            var camPrevSel = getCookie("vcxCamId");
-            var micPrevSel = getCookie("vcxMicId");
+            const camPrevSel = getCookie("vcxCamId");
+            const micPrevSel = getCookie("vcxMicId");
             if (camPrevSel && $("#cam option[value='"+camPrevSel+"']").length >= 0) {
                 $("#cam").val(camPrevSel);
             }
@@ -144,19 +141,19 @@ window.onload = function () {
 function check_QA_Debug(query_field){
     var field = query_field;
     var url = window.location.href;
-    if(url.indexOf('?' + field + '=') != -1)
+    if(url.indexOf('?' + field + '=') !== -1)
         return true;
-    else if(url.indexOf('&' + field + '=') != -1)
+    else if(url.indexOf('&' + field + '=') !== -1)
         return true;
     return false
 }
 function listOutVideoLayers() {
-    var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-    var maxLayers = isChrome ? 3 : 1;
+    const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+    const maxLayers = isChrome ? 3 : 1;
     for (var i = maxLayers; i > 0; i--) {
-        var x = document.getElementById("video-layers");
-        var option = document.createElement("option");
-        if (i == 1){
+        const x = document.getElementById("video-layers");
+        const option = document.createElement("option");
+        if (i === 1){
             option.text = i  + " Video Layer";
         }else{
             option.text = i + " Video Layers";
@@ -168,10 +165,10 @@ function listOutVideoLayers() {
 }
 function listOutMic(micLst) {
     for (var j = 0; j < micLst.length; j++) {
-        var x = document.getElementById("mic");
-        var option = document.createElement("option");
+        const x = document.getElementById("mic");
+        const option = document.createElement("option");
         option.text = micLst[j].label;
-        var micoptId = micLst[j].deviceId;
+        const micoptId = micLst[j].deviceId;
         option.setAttribute("id", micoptId);
         x.add(option);
     }
@@ -179,10 +176,10 @@ function listOutMic(micLst) {
 
 function listOutCam(camLst) {
     for (var i = 0; i < camLst.length; i++) {
-        var x = document.getElementById("cam");
-        var option = document.createElement("option");
+        const x = document.getElementById("cam");
+        const option = document.createElement("option");
         option.text = camLst[i].label;
-        var camoptId = camLst[i].deviceId;
+        const camoptId = camLst[i].deviceId;
         option.setAttribute("id", camoptId);
         x.add(option);
     }

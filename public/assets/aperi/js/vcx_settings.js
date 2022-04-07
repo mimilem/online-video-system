@@ -1,7 +1,7 @@
-var vcxSettings = {};
+const vcxSettings = {};
 
 vcxSettings.syncVideoDevices = () => {
-    var refreshIcon = document.getElementById('cam').nextSibling.nextSibling.childNodes[0];
+    const refreshIcon = document.getElementById('cam').nextSibling.nextSibling.childNodes[0];
     refreshIcon.classList.add('fa-spin');
     getDevice(() => {
         console.log('Devicelist updated');
@@ -10,7 +10,7 @@ vcxSettings.syncVideoDevices = () => {
 };
 
 vcxSettings.syncAudioDevices = () => {
-    var refreshIcon = document.getElementById('mic').nextSibling.nextSibling.childNodes[0];
+    const refreshIcon = document.getElementById('mic').nextSibling.nextSibling.childNodes[0];
     refreshIcon.classList.add('fa-spin');
     getDevice(() => {
         console.log('Audio Devicelist updated');
@@ -43,7 +43,7 @@ vcxSettings.unPublishMe = (stream, callback) => {
 };
 
 vcxSettings.publishMe = (config, callback) => {
-    var success = null;
+    let success = null;
     const onAccessError = (err) => {
         error = err;
         callback(success, error);
@@ -78,7 +78,6 @@ vcxSettings.toggleSidebar = (selector) => {
     watermark.style.width = '100%';
 
     let confoCurrentWidth = document.querySelector(".confo-container").clientWidth;
-    console.log('sidebarWidth: ', sidebarWidth, 'confoCurrentWidth: ', confoCurrentWidth)
 
     if (body.classList.contains('sidebar-opened')) {
         element.style.left = `-${sidebarWidth}px`;
@@ -93,7 +92,6 @@ vcxSettings.toggleSidebar = (selector) => {
         vcxSettings.initToolTip('#sidebar-toggle', 'Open Sidebar', 'right');
     }
     else {
-        console.log(document.querySelector(".confo-container").clientWidth);
         element.style.left = 0;
         siteContent.style.marginLeft = `${sidebarWidth}px`;
         footer.style.marginLeft = `${sidebarWidth}px`;
@@ -128,10 +126,10 @@ vcxSettings.showPvtChat = () => {
 };
 
 vcxSettings.resetPvtChatsCount = () => {
-    var pvtChatCounts = document.querySelector(`#pvt_chat-tag`);
+    const pvtChatCounts = document.querySelector(`#pvt_chat-tag`);
     pvtChatCounts.classList.remove('show-this');
     pvtChatCounts.classList.add('hide-this');
-    var pvtChattagBtn = _V('#private_chat_btn');
+    const pvtChattagBtn = _V('#private_chat_btn');
     pvtChattagBtn.style.display = 'none';
 };
 

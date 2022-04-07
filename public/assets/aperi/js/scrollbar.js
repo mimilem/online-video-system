@@ -1,6 +1,6 @@
 /**
 * jquery.scrollbar.js
-* 
+*
 **/
 
 ;(function($, window, document, undefined) {
@@ -12,7 +12,7 @@
 			moveCallback: function(top, direction) {},//运动时事件回调
 			stopCallback: function(top, direction) {},//停止时事件回调
 		};
-	
+
 	function Scrollbar($el, options) {
 		this.plugName = plugName;
 		this.$el = $el;
@@ -62,7 +62,7 @@
 		},
 		//生成滚动条的背景栏和拖动块
 		baseEl: function() {
-			var style = 
+			var style =
 				'.SC_outer {'+
 					'overflow: hidden;'+
 				'}'+
@@ -110,7 +110,7 @@
 				$('head').append('<style SC>'+ style +'</style>');
 			}
 
-			if(this.$el.css('position')=='static') {
+			if(this.$el.css('position') === 'static') {
 				this.$el.css('position', 'relative');
 			}
 			this.$el.addClass('SC_outer');
@@ -132,32 +132,32 @@
 		//绑定事件
 		event: function() {
 			var This = this,
-				oldX = 0,  
+				oldX = 0,
 				oldY = 0,
 				diffX = 0,
 				diffY = 0,
 				touchTimer = null;
 
 			if(document.addEventListener) {//手机端(防止IE8-报错)
-				This.$el[0].addEventListener('touchstart', function(e) {  
-					var targetTouches = e.targetTouches[0];  
-					oldX = targetTouches.pageX;  
-					oldY = targetTouches.pageY;  
+				This.$el[0].addEventListener('touchstart', function(e) {
+					var targetTouches = e.targetTouches[0];
+					oldX = targetTouches.pageX;
+					oldY = targetTouches.pageY;
 				});
 
 				This.$el[0].addEventListener('touchmove', function(e) {
 					clearInterval(touchTimer);
 					This.$SC_backCtn.add(This.$SC_frontCtn).fadeIn();
-					e.stopPropagation();//阻止页面滚动  
-					e.preventDefault();//阻止页面滚动  
-							  
-					var targetTouches = e.targetTouches[0];  
+					e.stopPropagation();//阻止页面滚动
+					e.preventDefault();//阻止页面滚动
 
-					var newX = targetTouches.pageX,  
-						newY = targetTouches.pageY; 
+					var targetTouches = e.targetTouches[0];
+
+					var newX = targetTouches.pageX,
+						newY = targetTouches.pageY;
 
 					diffX = newX - oldX;
-					diffY = newY - oldY;  
+					diffY = newY - oldY;
 
 					var childTop = This.$child.position().top,
 						elH = This.$el.outerHeight(),
@@ -170,12 +170,12 @@
 						This.$child.css({'top': '+='+ diffY/3});
 					}
 
-					oldX = newX;  
-					oldY = newY;  
+					oldX = newX;
+					oldY = newY;
 				});
 
-				This.$el[0].addEventListener('touchend', function(e) { 
-					var targetTouches = e.targetTouches[0];  
+				This.$el[0].addEventListener('touchend', function(e) {
+					var targetTouches = e.targetTouches[0];
 
 					var childTop = This.$child.position().top,
 						elH = This.$el.outerHeight(),
@@ -223,7 +223,7 @@
 							}
 						}, 20);
 					}
-					
+
 				});
 			}
 
@@ -321,9 +321,9 @@
 			This.text = This.$el.text();
 
 			This.timer = setInterval(function() {
-				var newtext = This.$el.text();
+                const newtext = This.$el.text();
 
-				if(This.text != newtext) {
+                if(This.text !== newtext) {
 					This.update();
 					This.text = This.$el.text();
 					if(This.options.autoBottom) {
@@ -369,10 +369,10 @@
 		},
 		//滚动至 ['top'] ['bottom'] [int]
 		scrollTo: function(pos, bool) {
-			if(pos == 'top') {
+			if(pos === 'top') {
 				this.curPos = 0;
 			}
-			if(pos == 'bottom') {
+			if(pos === 'bottom') {
 				this.curPos = -this.maxScroll;
 			}
 			if(/\d+/.test(pos)) {
@@ -397,7 +397,6 @@
 				}, 300);
 			}
 		},
-		
 	}
 
 	$.fn.extend({

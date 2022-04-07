@@ -16,6 +16,14 @@ class RoomsAppController extends Controller
             ->where('roomId', '=', $roomId)
             ->first();
 
+        session()->put([
+            'role' => base64_decode($role),
+            'roomId' => $roomId,
+            'user_ref' => base64_decode($user_ref),
+            'room' => base64_decode($room),
+            'rooms' => $rooms
+        ]);
+
         return view('apps.pages.render', [
             'token' => $token,
             'role' => base64_decode($role),

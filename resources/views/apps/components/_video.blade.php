@@ -13,7 +13,7 @@
                 </button>
             </div>
             <div class="watermark text-center">
-                <img class="img-fluid" id="water-mark-image" src="{{ asset('assets/admins/images/icon.png') }}">
+                <img class="img-fluid" id="water-mark-image" src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}">
             </div>
             <div class="confo-container conf-visible" style="display: none;">
                 <div id="layout_manager" class="" style="height: 100%;width:100%;"></div>

@@ -15,6 +15,9 @@ class CreateTokenController extends Controller
     public function createToken(CreateTokenRequest $attributes): RedirectResponse
     {
         $token = $this->repository->createToken(attributes: $attributes);
+        session()->put([
+            'token' => $token['0']['token']
+        ]);
 
         return redirect()->route('room.connect', [
             'token' => $token['0']['token'],

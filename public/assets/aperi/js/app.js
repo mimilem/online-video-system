@@ -7,14 +7,10 @@ $(document).ready(function () {
         }, 800);
     }
 
-    // $('.settings-tab').scrollbar({
-    //     autoBottom: false
-    // });
     var footer_h = document.querySelector('.footer').clientHeight;
     $(".scw-form").css("bottom", footer_h);
     var sitebar_height = $(".site-sidebar").innerHeight() - $("#first_sidebar").innerHeight() - $("#third_sidebar").innerHeight();
 
-    /********Chat UI Bot height calculation *************/
     var container = document.querySelector('.site-header').clientHeight + document.querySelector('.footer').clientHeight + $(".scw-header").innerHeight() + $(".scw-form").innerHeight();
     var inner_height = document.body.clientHeight - container;
 
@@ -53,7 +49,7 @@ $(document).ready(function () {
         $(".site-sidebar-third").css("height", document.body.clientHeight - (document.querySelector('.site-header').clientHeight + document.querySelector('.footer').clientHeight));
         $(".site-sidebar-fourth").css("height", document.body.clientHeight - (document.querySelector('.site-header').clientHeight + document.querySelector('.footer').clientHeight));
     });
-   
+
     /* Switch sidebar to compact */
     if (matchMedia) {
         var mq = window.matchMedia("(min-width: 768px) and (max-width: 991px)");
@@ -77,7 +73,6 @@ $(document).ready(function () {
             sidebarIfActive();
         }
     }
-
 
     /* Fullscreen */
     $('.toggle-fullscreen').click(function () {
@@ -274,5 +269,4 @@ function updateLeftPanel() {
 
         });
     }
-
 }

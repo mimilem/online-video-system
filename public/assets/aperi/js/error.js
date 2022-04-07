@@ -1,5 +1,4 @@
 var tokenError = {
-
         "4001": {
             "result": "4001",
             "token": "",

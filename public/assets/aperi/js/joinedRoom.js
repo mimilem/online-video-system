@@ -1,43 +1,43 @@
-var localStream = null;
-var username = null;
-var room, localId, roomType = null;
-var bootStrapAngular;
-var VideoSize;
-var streamShare = null;
-var canvasStarted = false;
-var shareStart = false;
-var presentationStarted = false;
-var audio_muted_all = false;
-var ATUserList = [];
-var isModerator = false;
-var active_talker = false;
-var audio_muted = false;
-var video_muted = false;
-var shareStream = null;
-var canvasStream = null;
-var recording_stared = false;
-var chatCount = 0;
-var wb = null;
-var room_locked = false;
-var oldATList = [];
-var email_tmplt = "";
-var audio_mute = false;
-var video_mute = false;
-var recording_subscription = true;
-var SubscribedStreamMap = new Map();
-var streams = [{}],
+let localStream = null;
+let username = null;
+let room, localId, roomType = null;
+let bootStrapAngular;
+let VideoSize;
+let streamShare = null;
+const canvasStarted = false;
+let shareStart = false;
+let presentationStarted = false;
+let audio_muted_all = false;
+let ATUserList = [];
+let isModerator = false;
+let active_talker = false;
+let audio_muted = false;
+let video_muted = false;
+let shareStream = null;
+let canvasStream = null;
+let recording_stared = false;
+let chatCount = 0;
+let wb = null;
+let room_locked = false;
+let oldATList = [];
+let email_template = "";
+const audio_mute = false;
+const video_mute = false;
+const recording_subscription = true;
+const SubscribedStreamMap = new Map();
+const streams = [{}],
     token = null;
-var localUserRef = {};
-var shareScreenStreamId = 11;
-var desktop_shared = false;
-var line_icon_class;
-var wbSavedState = null;
-var layoutContainer = document.querySelector('#layout_manager');
-var expandIcon = `<svg version="1.1" id="expand-icon" x="0px" y="0px" viewBox="0 0 490.667 490.667" style="enable-background:new 0 0 490.667 490.667;" xml:space="preserve" class="">
+const localUserRef = {};
+const shareScreenStreamId = 11;
+let desktop_shared = false;
+let line_icon_class;
+let wbSavedState = null;
+const layoutContainer = document.querySelector('#layout_manager');
+const expandIcon = `<svg version="1.1" id="expand-icon" x="0px" y="0px" viewBox="0 0 490.667 490.667" style="enable-background:new 0 0 490.667 490.667;" xml:space="preserve" class="">
 <g transform="matrix(0.932065 0 0 0.932065 16.6666 16.6666)"><g><g><path d="M423.531,67.136c-4.16-4.16-10.923-4.16-15.083,0L259.115,216.469c-4.16,4.16-4.16,10.923,0,15.083    c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115L423.531,82.219    C427.691,78.059,427.691,71.296,423.531,67.136z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#d44f1b"/>
 </g></g><g><g><path d="M416,64c-5.888,0-10.667,4.779-10.667,10.667v128c0,5.888,4.779,10.667,10.667,10.667c5.888,0,10.667-4.779,10.667-10.667    v-128C426.667,68.779,421.888,64,416,64z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#d44f1b"/>    </g></g><g>    <g>        <path d="M416,64H288c-5.888,0-10.667,4.779-10.667,10.667S282.112,85.333,288,85.333h128c5.888,0,10.667-4.779,10.667-10.667    S421.888,64,416,64z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#d44f1b"/>    </g></g><g>    <g>        <path d="M231.531,259.136c-4.16-4.16-10.923-4.16-15.083,0L67.115,408.469c-4.16,4.16-4.16,10.923,0,15.083    c2.091,2.069,4.821,3.115,7.552,3.115c2.731,0,5.461-1.045,7.531-3.115l149.333-149.333    C235.691,270.059,235.691,263.296,231.531,259.136z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#d44f1b"/>    </g></g><g>    <g>        <path d="M74.667,277.333C68.779,277.333,64,282.112,64,288v128c0,5.888,4.779,10.667,10.667,10.667S85.333,421.888,85.333,416V288    C85.333,282.112,80.555,277.333,74.667,277.333z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#d44f1b"/>    </g></g><g>    <g>        <path d="M202.667,405.333h-128C68.779,405.333,64,410.112,64,416c0,5.888,4.779,10.667,10.667,10.667h128    c5.888,0,10.667-4.779,10.667-10.667C213.333,410.112,208.555,405.333,202.667,405.333z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#d44f1b"/>    </g></g><g>    <g>        <path d="M458.667,0H32C14.357,0,0,14.357,0,32v426.667c0,17.643,14.357,32,32,32h426.667c17.643,0,32-14.357,32-32V32    C490.667,14.357,476.309,0,458.667,0z M469.333,458.667c0,5.867-4.8,10.667-10.667,10.667H32c-5.867,0-10.667-4.8-10.667-10.667    V32c0-5.867,4.8-10.667,10.667-10.667h426.667c5.867,0,10.667,4.8,10.667,10.667V458.667z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#d44f1b"/></g></g></g></svg>`;
 
-var collapseIcon = `<svg  id="collapse-grid" x="0px" y="0px" viewBox="0 0 271.673 271.673" style="enable-background:new 0 0 271.673 271.673;" xml:space="preserve"><g><path style="fill:#d44f1b;" d="M10.449,0h104.49c5.771,0,10.449,4.678,10.449,10.449v104.49c0,5.771-4.678,10.449-10.449,10.449
+const collapseIcon = `<svg  id="collapse-grid" x="0px" y="0px" viewBox="0 0 271.673 271.673" style="enable-background:new 0 0 271.673 271.673;" xml:space="preserve"><g><path style="fill:#d44f1b;" d="M10.449,0h104.49c5.771,0,10.449,4.678,10.449,10.449v104.49c0,5.771-4.678,10.449-10.449,10.449
     H10.449C4.678,125.388,0,120.71,0,114.939V10.449C0,4.678,4.678,0,10.449,0z"/>
     <path style="fill:#d44f1b;" d="M156.735,0h104.49c5.771,0,10.449,4.678,10.449,10.449v104.49c0,5.771-4.678,10.449-10.449,10.449
     h-104.49c-5.771,0-10.449-4.678-10.449-10.449V10.449C146.286,4.678,150.964,0,156.735,0z"/>
@@ -73,25 +73,22 @@ const toolbar_options = {
         settings: false
     }
 };
+
 let exit_url = "";
 let logo_file = "";
 let copyright_text = from_email = from_name = "";
 if(localStorage.getItem("domain_info") !== null)
 {
-    var data =  JSON.parse(localStorage.domain_info)
+    const data = JSON.parse(localStorage.domain_info);
     logo_file = data.logo_inner;
     document.title = data.name;
     copyright_text = data.copyright;
-    if(data.hasOwnProperty("credits"))
-    {
-        if(data.credits.enabled)
-        {
+    if(data.hasOwnProperty("credits")) {
+        if(data.credits.enabled) {
             document.querySelector("#powered_by_link").href=data.credits.target_url;
-            if(data.credits.logo_url === undefined || data.credits.logo_url === "")
-            {
+            if(data.credits.logo_url === undefined || data.credits.logo_url === "") {
                 document.querySelector("#powered_by_link").innerHTML = data.credits.name;
-            }
-            else {
+            } else {
                 document.querySelector("#powered_by_logo").src = data.credits.logo_url;
             }
             document.querySelector("#powered_by_tab").style.display="block";
@@ -100,42 +97,40 @@ if(localStorage.getItem("domain_info") !== null)
 
     change_favicon(data.favicon);
     exit_url = data.exit_url;
-    email_tmplt = data.email.template;
+    email_template = data.email.template;
     from_email = data.email.from_email;
     from_name = data.email.from_name;
 }
-if(logo_file !== "")
-{
+if(logo_file !== "") {
     document.querySelector("#logo_file").src = logo_file;
     document.querySelector("#logo_file").style.visibility = 'visible';
 }
-if(copyright_text !== "")
-{
+
+if(copyright_text !== "") {
     document.querySelector("#copy_txt").innerHTML=copyright_text;
 }
-if(exit_url === "")
-{
+
+if(exit_url === "") {
     exit_url = "https://localhost:8000/"
 }
 
 if (localStorage.recording_enable === "false") {
     $("#recording_btn").remove();
 }
+
 function change_favicon(img) {
     let favicon = document.querySelector('link[rel="shortcut icon"]');
-
     if (!favicon) {
         favicon = document.createElement('link');
         favicon.setAttribute('rel', 'shortcut icon');
-        var head = document.querySelector('head');
+        const head = document.querySelector('head');
         head.appendChild(favicon);
     }
-
     favicon.setAttribute('type', 'image/png');
     favicon.setAttribute('href', img);
 }
 
-var options = {
+let options = {
     id: 'vcx_1001',
     attachMode: '',
     resizer: false,
@@ -154,7 +149,8 @@ var options = {
         'displayMode': false,
     }
 };
-var optionsLocal = {
+
+const optionsLocal = {
     player: {
         'height': '160px',
         'width': '80%',
@@ -169,18 +165,18 @@ var optionsLocal = {
     }
 };
 
-var layoutConfig = {
+const layoutConfig = {
     ATHighlightClass: '',
     ATHighlightStyle: '2px solid red',
 };
 
-var chatTag = document.querySelector("#chat-tag");
-var muteUnmuteBtn = document.querySelector('#video_mute_btn');
+const chatTag = document.querySelector("#chat-tag");
+const muteUnmuteBtn = document.querySelector('#video_mute_btn');
 chatTag.style.display = 'none';
 
 window.onload = function () {
     $("#share_screen_btn").show();
-    var ua = navigator.userAgent.toLowerCase();
+    const ua = navigator.userAgent.toLowerCase();
     EnxRtc.Logger.setLogLevel(5);
     toastr.options.timeOut = 10000;
 
@@ -196,21 +192,21 @@ window.onload = function () {
         angular.bootstrap(document, ['userJoinListApp']);
     };
 
-    var enc = window.atob(token);
-    var dec = JSON.parse(enc);
+    const enc = window.atob(token);
+    const dec = JSON.parse(enc);
 
     localUserRef.mode = dec.roomMeta.settings.mode;
-    var VideoSize = {
+    const VideoSize = {
         'HD': [320, 180, 1280, 720],
         'SD': [320, 180, 640, 480],
         'LD': [80, 45, 640, 360]
     };
 
-    var video_source = {
+    const video_source = {
         deviceId: localStorage.getItem("cam")
     };
 
-    var config = {
+    const config = {
         video: true,
         audio: true,
         data: true,
@@ -224,20 +220,19 @@ window.onload = function () {
         maxVideoLayers: 1,
         maxVideoBW: 1500,
         minVideoBW: 80,
-        maxVideoFps : 25
+        maxVideoFps: 25
     };
     username = localStorage.getItem("userName");
     localStorage.setItem("streamConfig", JSON.stringify(config));
 
-
     function populateSetTalker() {
         room.getTalkerCount(function (res) {
             if (res.result === 0) {
-                var num_talkers = res.numTalkers;
+                let num_talkers = res.numTalkers;
                 num_talkers = num_talkers;
-                for (var c = 0; c <= num_talkers; c++) {
-                    var sel = '';
-                    var val = "";
+                for (let c = 0; c <= num_talkers; c++) {
+                    let sel = '';
+                    let val = "";
                     if (c === 0) {
                         val = language.audio_only;
                     } else {
@@ -274,8 +269,7 @@ window.onload = function () {
                         logout();
                     }
                     if (error.type && error.type === "room-error") {
-                        if(error.error=== 4122)
-                        {
+                        if(error.error=== 4122) {
                             swal({
                                 title: error.message,
                                 type: "error",
@@ -291,7 +285,6 @@ window.onload = function () {
                         else {
                             logout();
                         }
-
                     } else if (error.msg && error.msg.name && (error.msg.name === "NotFoundError" || error.msg.name === "NotReadableError" || error.msg.name === "NotSupportedError")) {
                         logout();
                     } else if ((error.msg && error.msg.name && (error.msg.name === "InvalidDeviceId"))) {
@@ -305,8 +298,7 @@ window.onload = function () {
                 if (success) {
                     startDuration();
                     room = success.room;
-                    if(room.locked)
-                    {
+                    if(room.locked) {
                         room_locked = true;
                         document.querySelector("#room_lock").setAttribute('title', 'Unlock Room');
                         document.querySelector(".lock_icon").classList.remove("fa-lock");
@@ -374,7 +366,7 @@ window.onload = function () {
                         }, 3000);
                     })
                     room.addEventListener('network-reconnect-failed', function (event) {
-                        var error_string = language.network_reconnect_failed;
+                        const error_string = language.network_reconnect_failed;
                         swal({
                             title: error_string,
                             type: "error",
@@ -388,7 +380,7 @@ window.onload = function () {
                         }, 3000);
                     })
                     room.addEventListener('network-disconnected', function (event) {
-                        var str = "";
+                        let str = "";
                         if (room.reconnectionAllowed === true) {
                             str = language.try_reconnect;
                         }
@@ -409,7 +401,7 @@ window.onload = function () {
                         }
                     })
                     room.addEventListener('network-reconnected', function (event) {
-                        var error_string = language.network_reconnected;
+                        const error_string = language.network_reconnected;
                         swal({
                             title: error_string,
                             type: "success",
@@ -446,7 +438,6 @@ window.onload = function () {
                                 logout();
                             }, 3000);
                         }
-
                     });
                     room.addEventListener("room-record-on", function () {
                         $("#rec-notification").show();
@@ -473,6 +464,7 @@ window.onload = function () {
                            toastr.success("Room locked by moderator");
                        }
                     });
+
                     room.addEventListener("room-unlocked",function(event){
                         console.log(event);
                         if(isModerator) {
@@ -482,6 +474,7 @@ window.onload = function () {
                             toastr.success("Room unlocked by moderator");
                         }
                     });
+
                     /* When room is unmuted, all participants are notified */
                     room.addEventListener("hard-unmute-room", function (event) {
                         $("#audio_mute_btn").html('<span><i class="fa fa-microphone fa-fw"></i></span><br>' + language.mute_txt);
@@ -490,6 +483,7 @@ window.onload = function () {
                         room.mute = false;
                         toastr.success(language.audio_unmuted_moderator);
                     });
+
                     room.addEventListener("hard-mute", function (evt) {
                         if (evt.users.status === "ON") {
                             localStream.muteAudio(function (arg) {
@@ -500,11 +494,11 @@ window.onload = function () {
                         }
                     });
 
-                    var plugin = (document.getElementById('WebrtcEverywherePluginId') !== null) ? document.getElementById('WebrtcEverywherePluginId') : room;
+                    const plugin = (document.getElementById('WebrtcEverywherePluginId') !== null) ? document.getElementById('WebrtcEverywherePluginId') : room;
                     room.addEventListener('stream-subscribed', function (streamEvent) {
                         closeLoader();
                         checkOnlyParMsg();
-                        var stream = (streamEvent.data && streamEvent.data.stream) ? streamEvent.data.stream : streamEvent.stream;
+                        const stream = (streamEvent.data && streamEvent.data.stream) ? streamEvent.data.stream : streamEvent.stream;
 
                         stream.addEventListener('bw-alert', function (event) {
                             updateBWMessages(event.stream.getID(), 'bw-low', 'add');
@@ -514,6 +508,7 @@ window.onload = function () {
                             updateBWMessages(event.stream.getID(), 'bw-restored', 'remove');
                         });
 
+                        let streamId;
                         if (active_talker === true) {
                             SubscribedStreamMap.set(stream.getID(), stream);
                             if (stream.ifScreen() && room.shareStatus) {
@@ -551,7 +546,7 @@ window.onload = function () {
                     room.addEventListener('active-talkers-updated', function (event) {
                         updateUserList();
                         ATUserList = event.message.activeList;
-                        var localList = {
+                        const localList = {
                             streamId: localStream.getID(),
                             name: localStorage.getItem("userName"),
                             clientId: room.clientId,
@@ -575,7 +570,7 @@ window.onload = function () {
                                 document.querySelector('div[id^="con_"]:first-of-type').style.gridRowEnd = 1;
                                 document.querySelector('#layout_manager').style.gridTemplateColumns = `1fr`;
                                 document.querySelector('#layout_manager').style.gridAutoRows = `auto`;
-                                var divtemp = document.querySelector("#con_11") || document.querySelector("#con_21");
+                                const divtemp = document.querySelector("#con_11") || document.querySelector("#con_21");
                                 if (divtemp !== null && divtemp !== undefined) {
                                     divtemp.style.width = "100%";
                                 }
@@ -1010,9 +1005,6 @@ window.onload = function () {
         } else {
             room.subscribeStreamStatsForClient(localStream, false);
         }
-    });
-    document.querySelector("#room_lock").addEventListener("click",function () {
-        lock_unlockRoom();
     });
 };
 
@@ -1540,29 +1532,29 @@ function sendFile() {
 }
 
 function addText() {
-    var text = document.getElementById('chat-text-area').value;
-    var elem = document.getElementById("chat");
+    let text = document.getElementById('chat-text-area').value;
+    const elem = document.getElementById("chat");
     if (/<[a-z][\s\S]*>/i.test(text)) {
         text = "'" + text + "'";
     }
     if (text !== "") {
-        var timestamp = moment()._d.getTime();
-        var templete = createChatText({
+        const timestamp = moment()._d.getTime();
+        const template = createChatText({
             text,
             timestamp
         });
-        $(templete).appendTo(elem);
+        $(template).appendTo(elem);
         document.getElementById('chat-text-area').value = '';
-        sendChatToServer(text);
+        template(text);
         scrollDivLast(elem);
     }
 }
 
 function addFileLocal(fileName, dataUrl) {
-    var timestamp = moment()._d.getTime();
-    var text = '<a href="' + dataUrl + '" download="' + fileName + '" target="_blank"><i class="fa fa-file-text-o fa-2x"></i> ' + fileName + '</a>';
-    var elem = document.getElementById("vcx-chat-container").getElementsByTagName("ul")[0];
-    var template = createChatText({
+    const timestamp = moment()._d.getTime();
+    const text = '<a href="' + dataUrl + '" download="' + fileName + '" target="_blank"><i class="fa fa-file-text-o fa-2x"></i> ' + fileName + '</a>';
+    const elem = document.getElementById("vcx-chat-container").getElementsByTagName("ul")[0];
+    const template = createChatText({
         text,
         timestamp
     }, 'html');
@@ -1573,7 +1565,7 @@ function addFileLocal(fileName, dataUrl) {
 
 function createChatText(obj) {
     const formattedDate = moment(obj.timestamp).format('LT');
-    var template = `<div class="message right">
+    return `<div class="message right">
             <span class="name">Me</span>
             <div class="bubble">
                 ${obj.text}
@@ -1581,7 +1573,6 @@ function createChatText(obj) {
                 <span class="time">${formattedDate}</span>
             </div>
         </div>`;
-    return template;
 }
 
 function sendChatToServer(text) {
@@ -1593,7 +1584,7 @@ function sendChatToServer(text) {
 
 function plotChat(obj) {
     const formattedDate = moment(obj.timestamp).format('LT');
-    var templete = `<div class="message">
+    const template = `<div class="message">
             <span class="name">${obj.username}</span>
             <div class="bubble">
                 ${obj.msg}
@@ -1602,8 +1593,8 @@ function plotChat(obj) {
             <span class="time">${formattedDate}</span>
         </div>`;
 
-    var elem = document.getElementById("chat");
-    $(templete).appendTo(elem);
+    const elem = document.getElementById("chat");
+    $(template).appendTo(elem);
     scrollDivLast(elem);
     updateChatNotify();
 }
@@ -1613,7 +1604,7 @@ function scrollDivLast(elem) {
 }
 
 function maxMinScreen(event) {
-    var element = event.target;
+    const element = event.target;
     if (element.classList.contains('minimized')) {
         element.classList.remove('minimized');
         element.classList.add('maximized');
@@ -1628,10 +1619,10 @@ function maxMinScreen(event) {
 };
 
 function muteOne_click(id) {
-    var clientId = id.split("^");
-    var x = id;
+    const clientId = id.split("^");
+    const x = id;
     Logger.info(x);
-    var sts = document.getElementById(x).value;
+    const sts = document.getElementById(x).value;
 
     room.muteOne(clientId[0], function (arg) {
         if (arg.result === 0) {

@@ -1,5 +1,5 @@
 window.onload = function(){
-    videoSupportRating = 0;
+    let videoSupportRating = 0;
     $('.icheck').iCheck({
         checkboxClass: 'icheckbox_minimal',
         radioClass: 'iradio_minimal',
@@ -43,11 +43,8 @@ window.onload = function(){
         $("#submitFeedback").attr("disabled","disabled");
         var key = window.location.href.split("/")[window.location.href.split("/").length - 1];
         username = localStorage.getItem("userName");
-        // var name = $("#feedback_username").val().trim();
-        // var email = $("#feedback_email").val().trim();
-        // var text_message = $("#feedback_message").val().trim();
-        audio_issues = "<ul>";
-        video_issues = "<ul>";
+        let audio_issues = "<ul>";
+        let video_issues = "<ul>";
         if(document.querySelector('#audio_not_present').checked)
         {
             audio_issues += "<li>I could not hear anyone</li>";
@@ -73,14 +70,14 @@ window.onload = function(){
             video_issues += "<li>Others could not see me</li>";
         }
 
-        if(video_issues == "<ul>")
+        if(video_issues === "<ul>")
         {
             video_issues = "NONE"
         }
         else {
             video_issues += "</ul>"
         }
-        if(audio_issues == "<ul>")
+        if(audio_issues === "<ul>")
         {
             audio_issues = "NONE"
         }
@@ -104,7 +101,7 @@ window.onload = function(){
 function send_feedback_mail(details,callback){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             callback(this.responseText);
         }
     };

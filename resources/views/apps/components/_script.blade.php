@@ -13,10 +13,10 @@
 <script type="text/javascript" src="{{ asset('assets/aperi/js/lang_change.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/aperi/js/vcxLayout.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/aperi/js/sweetalert.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/enableX/js/EnxRtc.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/aperi/js/EnxRtc.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/aperi/js/EnxWb.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/aperi/js/moment.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/enableX/js/util.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/aperi/js/util.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/aperi/js/vcx_settings.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/aperi/js/error.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/aperi/js/joinedRoom.js') }}"></script>
