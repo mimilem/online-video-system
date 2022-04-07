@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="zxx" class="js">
+<html lang="en" class="js">
 <head>
-    <base href="/">
     <title>{{ config('app.name') }} | @yield('title')</title>
     <link rel="stylesheet" href="{{ asset('assets/admins/css/dashlite.css') }}">
     <link rel="icon" sizes="512x512" href="{{ asset('assets/admins/images/icon.png') }}">

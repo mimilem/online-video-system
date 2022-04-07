@@ -8,12 +8,19 @@
             <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
                 <div class="brand-logo pb-4 text-center">
                     <a href="" class="logo-link">
-                        <img class="logo-light logo-img logo-img-lg" src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}" srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo">
-                        <img class="logo-dark logo-img logo-img-lg" src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}" srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo-dark">
+                        <img class="logo-light logo-img logo-img-lg"
+                             src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}"
+                             srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo">
+                        <img class="logo-dark logo-img logo-img-lg"
+                             src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}"
+                             srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo-dark">
                     </a>
                 </div>
                 <div class="card">
-                    <div class="card-inner card-inner-lg" >
+                    <div class="card-inner card-inner-lg">
+                        @if (session('error'))
+                            <div class="alert alert-danger">{{ session('error') }}</div>
+                        @endif
                         <div class="nk-block-head">
                             <div class="nk-block-head-content">
                                 <h4 class="nk-block-title text-center">Join Room</h4>
@@ -34,7 +41,7 @@
                                     type="text"
                                     class="form-control @error('meetingId') error @enderror"
                                     name="meetingId"
-                                    value="{{ old('meetingId') }}"
+                                    value="{{ old('meetingId') ? $roomId : ''}}"
                                     placeholder="Add your room id">
                             </div>
                             <div class="form-group">
@@ -46,7 +53,7 @@
                                     placeholder="Enter your Pin">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-outline-primary btn-block">Sign in</button>
+                                <button class="btn btn-outline-primary btn-block">Join room</button>
                             </div>
                         </form>
                         <div class="form-note-s2 text-center pt-4"> New on our platform?
@@ -73,7 +80,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="nk-block-content text-center text-lg-left">
-                                <p class="text-soft">&copy; 2019 CryptoLite. All Rights Reserved.</p>
+                                <p class="text-soft">&copy; {{ now()->format('Y') }} Ngomadigital. All Rights
+                                    Reserved.</p>
                             </div>
                         </div>
                     </div>

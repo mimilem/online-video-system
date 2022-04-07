@@ -10,7 +10,9 @@ use Illuminate\Http\RedirectResponse;
 
 class RoomController extends Controller
 {
-    public function __construct(public CreateRoomRepositoryInterface $repository){}
+    public function __construct(public CreateRoomRepositoryInterface $repository)
+    {
+    }
 
     public function joinRoom(): Renderable
     {
@@ -25,6 +27,6 @@ class RoomController extends Controller
     public function storeRoom(CreateRoomRequest $attributes): RedirectResponse
     {
         $this->repository->createRoom(attributes: $attributes);
-        return redirect()->route('rooms.join')->with('success', "Une mail a ete envoyer a votre address avec les informations necessaire pour rejoindre le room chat");
+        return to_route('rooms.join')->with('success', "A mail has been sent to your address with the necessary information to join the room chat");
     }
 }

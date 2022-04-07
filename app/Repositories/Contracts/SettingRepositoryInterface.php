@@ -7,7 +7,5 @@ interface SettingRepositoryInterface
 {
     public function endRoom($attributes);
 
-    public function sendMail($attributes);
-
     public function inviteRoom($attributes);
 }

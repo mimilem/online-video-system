@@ -22,11 +22,6 @@ class SettingRepository implements SettingRepositoryInterface
         return $room;
     }
 
-    public function sendMail($attributes)
-    {
-        // TODO: Implement sendMail() method.
-    }
-
     public function inviteRoom($attributes): Model|Builder|null
     {
         $users = $attributes->input('inviteUsers');
@@ -35,12 +30,12 @@ class SettingRepository implements SettingRepositoryInterface
             ->where('roomId', '=', $roomId)
             ->where('status', '=', RoomStatusEnum::FALSE)
             ->first();
-        if ($room->participants !== null){
+        if ($room->participants !== null) {
             $room->update([
                 'participants' => $room->participants - count($users)
             ]);
-            foreach ($users as $key => $user){
-                Mail::to($user)->send(new SendRoomIdMail($user, $roomId));
+            foreach ($users as $key => $user) {
+                Mail::to($user)->send(new SendRoomIdMail($user, $roomId, $room));
             }
         }
         return $room;

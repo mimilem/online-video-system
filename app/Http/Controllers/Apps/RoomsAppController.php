@@ -21,7 +21,8 @@ class RoomsAppController extends Controller
             'roomId' => $roomId,
             'user_ref' => base64_decode($user_ref),
             'room' => base64_decode($room),
-            'rooms' => $rooms
+            'rooms' => $rooms,
+            'token' => $token
         ]);
 
         return view('apps.pages.render', [

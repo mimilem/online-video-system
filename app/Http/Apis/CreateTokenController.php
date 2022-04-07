@@ -10,16 +10,15 @@ use Illuminate\Http\RedirectResponse;
 
 class CreateTokenController extends Controller
 {
-    public function __construct(public CreateTokenRepositoryInterface $repository){}
+    public function __construct(public CreateTokenRepositoryInterface $repository)
+    {
+    }
 
     public function createToken(CreateTokenRequest $attributes): RedirectResponse
     {
         $token = $this->repository->createToken(attributes: $attributes);
-        session()->put([
-            'token' => $token['0']['token']
-        ]);
 
-        return redirect()->route('room.connect', [
+        return to_route('room.connect', [
             'token' => $token['0']['token'],
             'role' => base64_encode($token['1']),
             'roomId' => $attributes->input('meetingId'),

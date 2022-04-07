@@ -3,15 +3,15 @@
     <div class="custom-scroll custom-scroll-light">
         <ul class="sidebar-menu" id="first_sidebar">
             <li>
-                <a href="#" class="" style="cursor: default;">
-                    <span id="user-name-div" class="s-text text-center" ></span>
+                <a href="#" style="cursor: default;">
+                    <span id="user-name-div" class="s-text text-center"></span>
                 </a>
             </li>
             <li>
                 <div id="local_div" style="padding:1rem 0;">
                     <img
                         src="{{ asset('assets/admins/images/icon.png') }}"
-                        width="100%"
+                        width="10%"
                         style="padding:1rem 0;display:none;background-color: #0d47a1;"
                     ></div>
             </li>
@@ -49,14 +49,16 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div id="pcr__participants" class="tab-pane show active" role="tabpanel" aria-labelledby="pcr__participants-tab">
+                        <div id="pcr__participants" class="tab-pane show active" role="tabpanel"
+                             aria-labelledby="pcr__participants-tab">
                             <div ng-app="userJoinListApp">
                                 <div id="attendance-layout" ng-controller="userJoinListController">
                                     <div ng-include="attendanceTemplate.url"></div>
                                 </div>
                             </div>
                         </div>
-                        <div id="pcr__chats" class="tab-pane fade public-chats-list " role="tabpanel" aria-labelledby="pcr__chats-tab">
+                        <div id="pcr__chats" class="tab-pane fade public-chats-list " role="tabpanel"
+                             aria-labelledby="pcr__chats-tab">
                             <h3 class="group-chat-label text-center">Group Chat</h3>
                             <div class="chat-list-container">
                                 <div id="chat" class="chat-messages"></div>
@@ -91,8 +93,8 @@
             </div>
         </div>
         <ul class="sidebar-menu" id="third_sidebar">
-            <li >
-                <a class="nav-link b-r-0"   target="_blank" style="border-left: none !important;">
+            <li>
+                <a class="nav-link b-r-0" target="_blank" style="border-left: none !important;">
                     &copy; {{ now()->format('Y') }} Ngoma Digitech
                 </a>
             </li>

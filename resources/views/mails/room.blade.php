@@ -1,5 +1,0 @@
-<h1>Hi</h1>
-<p>You have created virtual meeting. The following information can be used to join room </p>
-<p>Room Id : ".{{ $room_id }}</p>
-<a href="http:://localhost:8000/room/{{ $room_id }}">Join Room</a>
-
