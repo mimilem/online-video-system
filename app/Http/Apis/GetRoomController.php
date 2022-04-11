@@ -18,8 +18,8 @@ class GetRoomController extends Controller
     {
         $room = $this->repository->getRoom(attributes: $request);
         return view('apps.index', [
-            'roomId' => $request->route('room'),
-            'room' => $room
+            'roomId' => $room[1]['room']['room_id'],
+            'pins' => $room[0]->roomPin
         ]);
     }
 }

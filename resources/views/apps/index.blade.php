@@ -41,7 +41,7 @@
                                     type="text"
                                     class="form-control @error('meetingId') error @enderror"
                                     name="meetingId"
-                                    value="{{ old('meetingId') ? $roomId : ''}}"
+                                    value="{{ old('meetingId') ? $roomId : '' }}"
                                     placeholder="Add your room id">
                             </div>
                             <div class="form-group">
@@ -49,7 +49,7 @@
                                     type="text"
                                     class="form-control @error('roomPins') error @enderror"
                                     name="roomPins"
-                                    value="{{ old('roomPins') }}"
+                                    value="{{ old('roomPins') ? $pins : '' }}"
                                     placeholder="Enter your Pin">
                             </div>
                             <div class="form-group">
