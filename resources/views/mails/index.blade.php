@@ -3,6 +3,6 @@
 <p>RoomID : ".{{ $rooms['room']['room_id'] }}</p>
 <p>Facilitator Room Pin : ".{{ $pinsCode }}</p>
 <p>Student Room Pin : ".{{ $participant }}</p>
-<a href="{{ route('room.getRoom', ['room' => $rooms['room']['room_id']] }}">Join Event</a>
+<a href="{{ route('room.getRoom', $rooms['room']['room_id']) }}">Join Event</a>
 
 <p>Thank you to user Aperi</p>
