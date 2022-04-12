@@ -8,19 +8,48 @@
             <div class="nk-block nk-block-middle nk-auth-body wide-xs">
                 <div class="brand-logo pb-4 text-center">
                     <a href="{{ route('room.create') }}" class="logo-link">
-                        <img class="logo-light logo-img logo-img-lg" src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}" srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo">
-                        <img class="logo-dark logo-img logo-img-lg" src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}" srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo-dark">
+                        <img class="logo-light logo-img logo-img-lg"
+                             src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}"
+                             srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo">
+                        <img class="logo-dark logo-img logo-img-lg"
+                             src="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }}"
+                             srcset="{{ asset('assets/aperi/Aperi Logo/3x/Aperixhdpi.png') }} 2x" alt="logo-dark">
                     </a>
                 </div>
                 <div class="card">
                     <div class="card-inner card-inner-lg">
                         <div class="nk-block-head">
                             <div class="nk-block-head-content mb-3">
-                                <h4 class="nk-block-title text-center">Create your Room</h4>
+                                <h4 class="nk-block-title text-center">Room creator</h4>
                             </div>
                         </div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form action="{{ route('room.store') }}" method="POST">
                             @csrf
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control @error('name') error @enderror"
+                                    name="name"
+                                    value="{{ old('name') }}"
+                                    placeholder="Add your name">
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control @error('firstName') error @enderror"
+                                    name="firstName"
+                                    value="{{ old('firstName') }}"
+                                    placeholder="Add your first name">
+                            </div>
                             <div class="form-group">
                                 <input
                                     type="date"
@@ -58,12 +87,35 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <div id="dynamic_field">
+                                    <div class="row text-center mb-2">
+                                        <div class="col-md-9">
+                                            <div class="form-control-wrap">
+                                                <input
+                                                    type="email"
+                                                    name="guests[]"
+                                                    placeholder="email address of the guests"
+                                                    class="form-control name_list"
+                                                    value="{{ old('guests[]') }}"
+                                                    id="task">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" name="add" id="add" class="btn btn-success">
+                                                <em class="icon ni ni-plus"></em>
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="form-control-wrap">
                                     <input
                                         type="text"
-                                        class="form-control @error('participants') error @enderror"
-                                        name="participants"
-                                        value="{{ old('participants') }}"
+                                        class="form-control @error('usersNumber') error @enderror"
+                                        name="usersNumber"
+                                        value="{{ old('usersNumber') }}"
                                         placeholder="Number of participants">
                                 </div>
                             </div>
@@ -95,7 +147,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="nk-block-content text-center text-sm-left">
-                                <p class="text-soft small">&copy; {{ now()->format('Y') }} Aperi. All Rights Reserved.</p>
+                                <p class="text-soft small">&copy; {{ now()->format('Y') }} Aperi. All Rights
+                                    Reserved.</p>
                             </div>
                         </div>
                     </div>
@@ -103,4 +156,20 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        var i = 1;
+        $('#add').click(function () {
+            var task = $("#task").val();
+            i++;
+            $('#dynamic_field').append('<div id="row' + i + '" class="row text-center mb-1"><div class="col-md-9"><div class="form-control-wrap"><input type="text" class="form-control" name="guests[]" placeholder="email address of the guests" class="form-control name_list" value="' + task + '" /></div></div><div class="col-md-3"><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove"><em class="icon ni ni-minus"></em></button></td></div>');
+        });
+
+        $(document).on('click', '.btn_remove', function () {
+            var button_id = $(this).attr("id");
+            $('#row' + button_id + '').remove();
+        });
+    </script>
 @endsection

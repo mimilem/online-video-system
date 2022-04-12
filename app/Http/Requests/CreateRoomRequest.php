@@ -15,11 +15,15 @@ class CreateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['required', 'string', 'min:4'],
+            'firstName' => ['required', 'string', 'min:4'],
             'date' => ['required', 'date', 'after:tomorrow'],
             'startTime' => ['required', 'date_format:H:i'],
             'endTime' => ['required', 'date_format:H:i', 'after:startTime'],
             'email' => ['required', 'email'],
-            'participants' => ['required']
+            "guests" => ['required', 'array'],
+            "guests.*" => ['required', 'distinct'],
+            'usersNumber' => ['required']
         ];
     }
 }
