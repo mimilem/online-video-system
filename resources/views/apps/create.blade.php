@@ -20,7 +20,7 @@
                     <div class="card-inner card-inner-lg">
                         <div class="nk-block-head">
                             <div class="nk-block-head-content mb-3">
-                                <h4 class="nk-block-title text-center">Room creator</h4>
+                                <h4 class="nk-block-title text-center">Create a Room</h4>
                             </div>
                         </div>
                         @if ($errors->any())
@@ -51,6 +51,16 @@
                                     placeholder="Add your first name">
                             </div>
                             <div class="form-group">
+                                <div class="form-control-wrap">
+                                    <input
+                                        type="email"
+                                        class="form-control @error('email') error @enderror"
+                                        name="email"
+                                        value="{{ old('email') }}"
+                                        placeholder="Add your email address">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <input
                                     type="date"
                                     class="form-control @error('date') error @enderror"
@@ -79,11 +89,11 @@
                             <div class="form-group">
                                 <div class="form-control-wrap">
                                     <input
-                                        type="email"
-                                        class="form-control @error('email') error @enderror"
-                                        name="email"
-                                        value="{{ old('email') }}"
-                                        placeholder="Add your email address">
+                                        type="text"
+                                        class="form-control @error('usersNumber') error @enderror"
+                                        name="usersNumber"
+                                        value="{{ old('usersNumber') }}"
+                                        placeholder="Number of participants">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -94,7 +104,7 @@
                                                 <input
                                                     type="email"
                                                     name="guests[]"
-                                                    placeholder="email address of the guests"
+                                                    placeholder="participant's email address"
                                                     class="form-control name_list"
                                                     value="{{ old('guests[]') }}"
                                                     id="task">
@@ -110,17 +120,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="form-control-wrap">
-                                    <input
-                                        type="text"
-                                        class="form-control @error('usersNumber') error @enderror"
-                                        name="usersNumber"
-                                        value="{{ old('usersNumber') }}"
-                                        placeholder="Number of participants">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-outline-primary btn-block">Create room</button>
+                                <button class="btn btn-outline-primary btn-block">Create a Room</button>
                             </div>
                         </form>
                         <div class="form-note-s2 text-center pt-4"> New on our platform?
