@@ -23,7 +23,7 @@
                         @endif
                         <div class="nk-block-head">
                             <div class="nk-block-head-content">
-                                <h4 class="nk-block-title text-center">Join Room</h4>
+                                <h4 class="nk-block-title text-center">Joins Sessions</h4>
                             </div>
                         </div>
                         <form action="{{ route('room.token') }}" method="POST">
@@ -53,11 +53,11 @@
                                     placeholder="Enter your Pin">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-outline-primary btn-block">Join room</button>
+                                <button class="btn btn-outline-primary btn-block">Joins Sessions</button>
                             </div>
                         </form>
                         <div class="form-note-s2 text-center pt-4"> New on our platform?
-                            <a href="{{ route('room.create') }}">Create room</a>
+                            <a href="{{ route('room.create') }}">CREATE SESSION.</a>
                         </div>
                     </div>
                 </div>
