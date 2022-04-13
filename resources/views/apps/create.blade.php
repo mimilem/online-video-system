@@ -60,6 +60,32 @@
                                         placeholder="Add your email address">
                                 </div>
                             </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="form-control-wrap">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('city') error @enderror"
+                                                name="city"
+                                                value="{{ old('city') }}"
+                                                placeholder="Your city">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="form-control-wrap">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('country') error @enderror"
+                                                name="country"
+                                                value="{{ old('country') }}"
+                                                placeholder="Your country">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <input
                                     type="date"

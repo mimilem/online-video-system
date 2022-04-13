@@ -26,6 +26,7 @@ class RoomController extends Controller
 
     public function storeRoom(CreateRoomRequest $attributes): RedirectResponse
     {
+        $date = $attributes->input('date');
         $this->repository->createRoom(attributes: $attributes);
         return to_route('rooms.join')->with('success', "A mail has been sent to your address with the necessary information to join the room chat");
     }

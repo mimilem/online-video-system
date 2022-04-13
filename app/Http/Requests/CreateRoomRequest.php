@@ -23,7 +23,9 @@ class CreateRoomRequest extends FormRequest
             'email' => ['required', 'email'],
             "guests" => ['required', 'array'],
             "guests.*" => ['required', 'distinct'],
-            'usersNumber' => ['required']
+            'usersNumber' => ['required'],
+            'city' => ['required', 'string'],
+            'country' => ['required', 'string']
         ];
     }
 }

@@ -11,18 +11,21 @@ class RoomNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public $pinCode, public $rooms, public $participant)
+    public function __construct(public $pinCode, public $rooms, public $date, public $timeZone, public $organiser, public $attributes)
     {
     }
 
     public function build(): RoomNotificationMail
     {
         return $this
-            ->subject("Virtual meeting Created")
+            ->subject("Confirmation of an APERI Online Session Creation!")
             ->view('mails.index', [
                 'pinsCode' => $this->pinCode,
                 'rooms' => $this->rooms,
-                'participant' => $this->participant
+                'timeZone' => $this->timeZone,
+                'organiser' => $this->organiser,
+                'date' => $this->date,
+                'attributes' => $this->attributes
             ]);
     }
 }

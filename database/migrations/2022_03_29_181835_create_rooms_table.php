@@ -21,6 +21,8 @@ return new class extends Migration {
             $table->string('usersNumber');
             $table->text('guests');
             $table->string('password');
+            $table->string('city');
+            $table->string('country');
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

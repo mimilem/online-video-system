@@ -27,11 +27,13 @@ final class CreateRoomRepository implements CreateRoomRepositoryInterface
         $pinCode = rand(100000, 999999);
         $participant = $this->generateRandomTransaction(6);
         $guests = $attributes->input('guests');
+        $timeZone = $attributes->input('city') . '/' . $attributes->input('country');
+        $organiser = $attributes->input('name') . '-' . $attributes->input('firstName');
 
-        Mail::to($attributes->input('email'))->send(new RoomNotificationMail($pinCode, $rooms, $participant));
+        Mail::to($attributes->input('email'))->send(new RoomNotificationMail($pinCode, $rooms, $date, $timeZone, $organiser, $attributes));
 
         foreach ($guests as $guest) {
-            Mail::to($guest)->send(new SendEmailToGuestMail($participant, $rooms, $date));
+            Mail::to($guest)->send(new SendEmailToGuestMail($participant, $rooms, $date, $timeZone, $guest));
         }
 
         return Room::query()
@@ -47,6 +49,8 @@ final class CreateRoomRepository implements CreateRoomRepositoryInterface
                 'usersNumber' => $rooms['room']['settings']['participants'],
                 'guests' => serialize($attributes->input('guests')),
                 'password' => $participant,
+                'city' => $attributes->input('city'),
+                'country' => $attributes->input('country')
             ]);
     }
 
