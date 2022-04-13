@@ -20,7 +20,7 @@
                     <div class="card-inner card-inner-lg">
                         <div class="nk-block-head">
                             <div class="nk-block-head-content mb-3">
-                                <h4 class="nk-block-title text-center">Create Session</h4>
+                                <h4 class="nk-block-title text-center">Create a Session</h4>
                             </div>
                         </div>
                         @if ($errors->any())
@@ -146,11 +146,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-outline-primary btn-block">Create Session</button>
+                                <button class="btn btn-outline-primary btn-block">Create a Session</button>
                             </div>
                         </form>
-                        <div class="form-note-s2 text-center pt-4"> New on our platform?
-                            <a href="{{ route('rooms.join') }}">JOINS SESSION</a>
+                        <div class="form-note-s2 text-center pt-4"> New on our Platform?
+                            <a href="{{ route('rooms.join') }}">JOIN SESSION.</a>
                         </div>
                     </div>
                 </div>
@@ -173,7 +173,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="nk-block-content text-center text-sm-left">
-                                <p class="text-soft small">&copy; {{ now()->format('Y') }} Aperi. All Rights
+                                <p class="text-soft small">&copy; {{ now()->format('Y') }} Ngoma Digitech (Ply) Ltd. All
+                                    Rights
                                     Reserved.</p>
                             </div>
                         </div>
