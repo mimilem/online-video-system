@@ -33,7 +33,7 @@ final class CreateRoomRepository implements CreateRoomRepositoryInterface
         Mail::to($attributes->input('email'))->send(new RoomNotificationMail($pinCode, $rooms, $date, $timeZone, $organiser, $attributes));
 
         foreach ($guests as $guest) {
-            Mail::to($guest)->send(new SendEmailToGuestMail($participant, $rooms, $date, $timeZone, $guest));
+            Mail::to($guest)->send(new SendEmailToGuestMail($participant, $rooms, $date, $timeZone, $guest, $attributes));
         }
 
         return Room::query()

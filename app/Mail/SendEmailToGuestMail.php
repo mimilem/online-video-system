@@ -11,7 +11,7 @@ class SendEmailToGuestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public $participant, public $rooms, public $date, public $timeZone, public $guest)
+    public function __construct(public $participant, public $rooms, public $date, public $timeZone, public $guest, public $attributes)
     {
     }
 
@@ -24,7 +24,8 @@ class SendEmailToGuestMail extends Mailable
                 'room' => $this->rooms,
                 'date' => $this->date,
                 'timeZone' => $this->timeZone,
-                'guest' => $this->guest
+                'guest' => $this->guest,
+                'attributes' => $this->attributes
             ]);
     }
 }
